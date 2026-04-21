@@ -5,7 +5,7 @@ print(arr) # output: [1, 2, 3]
 # Can be used as a stack 
 arr.append(4)
 arr.append(5)
-print(arr) # output: [1, 2, 3, 4]
+print(arr) # output: [1, 2, 3, 4, 5]
 
 arr.pop()
 print(arr) # output: [1, 2, 3, 4]
