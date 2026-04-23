@@ -117,21 +117,102 @@ class MinStack:
 # class Solution:
 #     def evalRPN(self, tokens: List[str]) -> int:
 
-
-#########################################################################################
-
 class Solution:
     def evalRPN(self, tokens: List[str]) -> int:
         stack = []
-
         for c in tokens:
-            if c == '+':
-                return stack.pop() + stack.pop()
-            elif c == '-':
+            if c == "+":
+                stack.append(stack.pop()+stack.pop())
+            elif c == "-": 
                 a, b = stack.pop(), stack.pop()
-                
-            elif c == '*':
-            elif c == '/':
+                stack.append(b - a)
+            elif c == "*":
+                stack.append(stack.pop()*stack.pop())
+            elif c == "/":   
+                a, b = stack.pop(), stack.pop()
+                stack.append(int(b / a))
             else:
+                stack.append(int(c))
+        return stack[0]
+    
+#########################################################################################
+# Daily Temperatures
+# You are given an array of integers temperatures where temperatures[i] represents the daily temperatures on the ith day.
 
-                
+# Return an array result where result[i] is the number of days after the ith day before a warmer temperature appears on a future day. If there is no day in the future where a warmer temperature will appear for the ith day, set result[i] to 0 instead.
+
+# Example 1:
+
+# Input: temperatures = [30,38,30,36,35,40,28]
+
+# Output: [1,4,1,2,1,0,0]
+# Example 2:
+
+# Input: temperatures = [22,21,20]
+
+# Output: [0,0,0]
+
+class Solution:
+    def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
+        
+
+#########################################################################################
+# Car Fleet
+# There are n cars traveling to the same destination on a one-lane highway.
+
+# You are given two arrays of integers position and speed, both of length n.
+
+# position[i] is the position of the ith car (in miles)
+# speed[i] is the speed of the ith car (in miles per hour)
+# The destination is at position target miles.
+
+# A car can not pass another car ahead of it. It can only catch up to another car and then drive at the same speed as the car ahead of it.
+
+# A car fleet is a non-empty set of cars driving at the same position and same speed. A single car is also considered a car fleet.
+
+# If a car catches up to a car fleet the moment the fleet reaches the destination, then the car is considered to be part of the fleet.
+
+# Return the number of different car fleets that will arrive at the destination.
+
+# Example 1:
+
+# Input: target = 10, position = [1,4], speed = [3,2]
+
+# Output: 1
+# Explanation: The cars starting at 1 (speed 3) and 4 (speed 2) become a fleet, meeting each other at 10, the destination.
+
+# Example 2:
+
+# Input: target = 10, position = [4,1,0,7], speed = [2,2,1,1]
+
+# Output: 3
+# Explanation: The cars starting at 4 and 7 become a fleet at position 10. The cars starting at 1 and 0 never catch up to the car ahead of them. 
+# Thus, there are 3 car fleets that will arrive at the destination.
+
+class Solution:
+    def carFleet(self, target: int, position: List[int], speed: List[int]) -> int:
+        
+
+#########################################################################################
+
+# Largest Rectangle In Histogram
+# You are given an array of integers heights where heights[i] represents the height of a bar. The width of each bar is 1.
+
+# Return the area of the largest rectangle that can be formed among the bars.
+
+# Note: This chart is known as a histogram.
+
+# Example 1:
+
+# Input: heights = [7,1,7,2,2,4]
+
+# Output: 8
+# Example 2:
+
+# Input: heights = [1,3,7]
+
+# Output: 7
+
+class Solution:
+    def largestRectangleArea(self, heights: List[int]) -> int:
+        
