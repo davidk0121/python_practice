@@ -33,9 +33,14 @@ class Solution:
 
         for c in s:
             if c in map:
-                
+                if stack and map[c] == stack[-1]:
+                    stack.pop()
+                else:
+                    return False
+            else:
+                stack.append(c)
 
-
+        return True if not stack else False
 
 
 
@@ -72,19 +77,23 @@ class Solution:
 class MinStack:
 
     def __init__(self):
-        
+        self.stack = []
+        self.minStack = []
 
     def push(self, val: int) -> None:
-        
+        self.stack.append(val)
+        val = min(val, self.minStack[-1] if self.minStack else val)
+        self.minStack.append(val)
 
     def pop(self) -> None:
-        
+        self.stack.pop()
+        self.minStack.pop()
 
     def top(self) -> int:
-        
+        return self.stack[-1]
 
     def getMin(self) -> int:
-
+        return self.minStack[-1]
 
 
 #########################################################################################
@@ -110,3 +119,19 @@ class MinStack:
 
 
 #########################################################################################
+
+class Solution:
+    def evalRPN(self, tokens: List[str]) -> int:
+        stack = []
+
+        for c in tokens:
+            if c == '+':
+                return stack.pop() + stack.pop()
+            elif c == '-':
+                a, b = stack.pop(), stack.pop()
+                
+            elif c == '*':
+            elif c == '/':
+            else:
+
+                
