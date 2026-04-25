@@ -154,7 +154,16 @@ class Solution:
 
 class Solution:
     def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
+        res = [0] * len(temperatures)
+        stack = [] # store [temp, index]
+
+        for i, t in enumerate(temperatures):
+            while stack and t > stack[-1][0]:
+                stackT, stackI = stack.pop()
+                res[stackI] = i - stackI
+            stack.append((t, i))
         
+        return res
 
 #########################################################################################
 # Car Fleet
@@ -191,6 +200,15 @@ class Solution:
 
 class Solution:
     def carFleet(self, target: int, position: List[int], speed: List[int]) -> int:
+        pair = [[p, i] for p, i in zip(position, speed)] # make pairs
+        pair.sort(reverse = True) # reverse order
+        stack = []
+
+        for p, i in pair: 
+            stack.append((target - p) / i) # store time
+            if len(stack) >= 2 and stack[-1] <= stack[-2]: # stack has more then two && car behind is faster=fleet
+                stack.pop() # pop other cars in the same fleet
+        return len(stack) # return fleet count
         
 
 #########################################################################################
@@ -215,4 +233,29 @@ class Solution:
 
 class Solution:
     def largestRectangleArea(self, heights: List[int]) -> int:
-        
+        n = len(heights)
+        stack = []
+
+        leftMost = [-1] * n
+        for i in range(n):
+            while stack and heights[stack[-1]] >= heights[i]:
+                stack.pop()
+            if stack:
+                leftMost[i] = stack[-1]
+            stack.append(i)
+
+        stack = []
+        rightMost = [n] * n
+        for i in range(n - 1, -1, -1):
+            while stack and heights[stack[-1]] >= heights[i]:
+                stack.pop()
+            if stack:
+                rightMost[i] = stack[-1]
+            stack.append(i)
+
+        maxArea = 0
+        for i in range(n):
+            leftMost[i] += 1
+            rightMost[i] -= 1
+            maxArea = max(maxArea, heights[i] * (rightMost[i] - leftMost[i] + 1))
+        return maxArea
