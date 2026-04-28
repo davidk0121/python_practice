@@ -77,12 +77,6 @@ class Solution:
                 return [l + 1, r + 1]
         return []
 
-
-# Traceback (most recent call last):
-#   File "/box/main.py", line 44, in main
-#     raise TypeError(f"Your output was {output}, but the expected return type is List[int]")
-# TypeError: Your output was True, but the expected return type is List[int]
-
 #########################################################################################
 # 3Sum
 
@@ -118,51 +112,25 @@ class Solution:
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
         res = []
-
-        for i, n in enumerate(nums):
-            l, r = 1 + i, len(nums) - 1
-
-            while nums[l] != n: 
-                l += 1
-            
-            while l < r:
-                sum = n + nums[l] + nums[r]
-                if 0 < sum:
-                    r -= 1
-                elif 0 > sum:
-                    l += 1
-                else:
-                    res.append[n, nums[l], nums[r]]
-                    
-
-class Solution:
-    def threeSum(self, nums: List[int]) -> List[List[int]]:
-        res = []
         nums.sort()
 
-        for i, a in enumerate(nums):
-            if a > 0:
-                break
-
-            if i > 0 and a == nums[i - 1]:
+        for i, n in enumerate(nums):
+            if i > 0 and n == nums[i - 1]:
                 continue
 
             l, r = i + 1, len(nums) - 1
             while l < r:
-                threeSum = a + nums[l] + nums[r]
-                if threeSum > 0:
-                    r -= 1
-                elif threeSum < 0:
+                sum = n + nums[l] + nums[r]
+                if sum < 0:
                     l += 1
+                elif sum > 0:
+                    r -= 1
                 else:
-                    res.append([a, nums[l], nums[r]])
+                    res.append([n, nums[l], nums[r]])
                     l += 1
-                    r -= 1
-                    while nums[l] == nums[l - 1] and l < r:
+                    while l < r and nums[l] == nums[l - 1]:
                         l += 1
-
         return res
-        
 
 #########################################################################################
 # Container With Most Water
@@ -173,31 +141,25 @@ class Solution:
 
 # Example 1:
 # Input: height = [1,7,2,5,4,7,3,6]
-
 # Output: 36
+
 # Example 2:
-
 # Input: height = [2,2,2]
-
 # Output: 4
 
 class Solution:
     def maxArea(self, heights: List[int]) -> int:
-        
-class Solution:
-    def maxArea(self, heights: List[int]) -> int:
-        l, r = 0, len(heights) - 1
         res = 0
+        l, r = 0, len(heights) - 1
 
         while l < r:
             area = min(heights[l], heights[r]) * (r - l)
-            res = max(res, area)
-            if heights[l] <= heights[r]:
+            res = max(area, res)
+            if(heights[l] <= heights[r]):
                 l += 1
             else:
                 r -= 1
         return res
-
 
 #########################################################################################
 
@@ -214,5 +176,23 @@ class Solution:
 
 class Solution:
     def trap(self, height: List[int]) -> int:
+        if not height: return 0
+        
+        res = 0
+        l, r = 0, len(height) - 1
+        leftMax, rightMax = height[l], height[r]
+
+
+        while l < r:
+            if leftMax <= rightMax:
+                l += 1
+                leftMax = max(leftMax, height[l])
+                res += leftMax - height[l]
+            else: 
+                r -= 1
+                rightMax = max(rightMax, height[r])
+                res += rightMax - height[r]
+        return res
+
         
 #########################################################################################
