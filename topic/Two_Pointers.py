@@ -115,8 +115,7 @@ class Solution:
         nums.sort()
 
         for i, n in enumerate(nums):
-            if i > 0 and n == nums[i - 1]:
-                continue
+            if i > 0 and n == nums[i - 1]: continue
 
             l, r = i + 1, len(nums) - 1
             while l < r:
@@ -132,11 +131,11 @@ class Solution:
                         l += 1
         return res
 
+
 #########################################################################################
 # Container With Most Water
 
 # You are given an integer array heights where heights[i] represents the height of the ith bar.
-
 # You may choose any two bars to form a container. Return the maximum amount of water a container can store.
 
 # Example 1:
@@ -149,50 +148,44 @@ class Solution:
 
 class Solution:
     def maxArea(self, heights: List[int]) -> int:
-        res = 0
+        res = 0 
         l, r = 0, len(heights) - 1
 
         while l < r:
-            area = min(heights[l], heights[r]) * (r - l)
-            res = max(area, res)
-            if(heights[l] <= heights[r]):
+            res = max(min(heights[l], heights[r]) * (r - l), res)
+            if heights[l] < heights[r]:
                 l += 1
             else:
                 r -= 1
         return res
 
 #########################################################################################
-
 # Trapping Rain Water
 
 # You are given an array of non-negative integers height which represent an elevation map. Each value height[i] represents the height of a bar, which has a width of 1.
-
 # Return the maximum area of water that can be trapped between the bars.
 
 # Example 1:
-
 # Input: height = [0,2,0,3,1,0,1,3,2,1]
 # Output: 9
-
 class Solution:
     def trap(self, height: List[int]) -> int:
         if not height: return 0
-        
-        res = 0
+        res = 0 
         l, r = 0, len(height) - 1
-        leftMax, rightMax = height[l], height[r]
-
+        maxLeft, maxRight = height[l], height[r]
 
         while l < r:
-            if leftMax <= rightMax:
+            if maxLeft <= maxRight: 
                 l += 1
-                leftMax = max(leftMax, height[l])
-                res += leftMax - height[l]
-            else: 
+                maxLeft = max(maxLeft, height[l])
+                res += maxLeft - height[l]
+            else:
                 r -= 1
-                rightMax = max(rightMax, height[r])
-                res += rightMax - height[r]
+                maxRight = max(maxRight, height[r])
+                res += maxRight - height[r]
         return res
+
 
         
 #########################################################################################

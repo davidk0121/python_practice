@@ -18,7 +18,20 @@
 
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
+        
+class Solution:     
+    def maxProfit(self, prices: List[int]) -> int:
+        l, r = 0, 1
+        maxP = 0
 
+        while r < len(prices):
+            if prices[l] < prices[r]:
+                profit = prices[r] - prices[l]
+                maxP = max(maxP, profit)
+            else:
+                l = r
+            r += 1
+        return maxP
 
 #########################################################################################
 # Longest Substring Without Repeating Characters
@@ -40,8 +53,35 @@ class Solution:
 
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        
 
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        charSet = set()
+        l = 0
+        res = 0
+
+        for r in range(len(s)):
+            while s[r] in charSet:
+                charSet.remove(s[l])
+                l += 1
+            charSet.add(s[r])
+            res = max(res, r - l + 1)
+        return res
+
+# Optimal
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        mp = {}
+        l = 0
+        res = 0
+
+        for r in range(len(s)):
+            if s[r] in mp:
+                l = max(mp[s[r]] + 1, l)
+            mp[s[r]] = r
+            res = max(res, r - l + 1)
+        return res
+    
 #########################################################################################
 # Longest Repeating Character Replacement
 # Medium
