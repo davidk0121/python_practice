@@ -64,33 +64,16 @@ class Solution:
 
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        
-class Solution:
-    def lengthOfLongestSubstring(self, s: str) -> int:
+        l = 0 
+        res = 0 
         charSet = set()
-        l = 0
-        res = 0
 
         for r in range(len(s)):
             while s[r] in charSet:
                 charSet.remove(s[l])
                 l += 1
             charSet.add(s[r])
-            res = max(res, r - l + 1)
-        return res
-
-# Optimal
-class Solution:
-    def lengthOfLongestSubstring(self, s: str) -> int:
-        mp = {}
-        l = 0
-        res = 0
-
-        for r in range(len(s)):
-            if s[r] in mp:
-                l = max(mp[s[r]] + 1, l)
-            mp[s[r]] = r
-            res = max(res, r - l + 1)
+            res = max(res, len(charSet))
         return res
     
 #########################################################################################
@@ -113,6 +96,25 @@ class Solution:
 
 class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
+
+class Solution:
+    def characterReplacement(self, s: str, k: int) -> int:
+        res = 0
+        charSet = set(s)
+
+        for c in charSet:
+            count = l = 0
+            for r in range(len(s)):
+                if s[r] == c:
+                    count += 1
+
+                while (r - l + 1) - count > k:
+                    if s[l] == c:
+                        count -= 1
+                    l += 1
+
+                res = max(res, r - l + 1)
+        return res
         
 #########################################################################################
 # Permutation in String
