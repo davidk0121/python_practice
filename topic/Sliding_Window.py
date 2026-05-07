@@ -30,20 +30,6 @@ class Solution:
                 r += 1
         return maxRes
 
-class Solution:     
-    def maxProfit(self, prices: List[int]) -> int:
-        l, r = 0, 1
-        maxP = 0
-
-        while r < len(prices):
-            if prices[l] < prices[r]:
-                profit = prices[r] - prices[l]
-                maxP = max(maxP, profit)
-            else:
-                l = r
-            r += 1
-        return maxP
-
 #########################################################################################
 # Longest Substring Without Repeating Characters
 # Medium
@@ -96,33 +82,18 @@ class Solution:
 
 class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
-        charSet = set()
-        res = 0
+        count = {}
+        res = 0 
+        l, r = 0, 0 
 
-        for c in s:
-            if c in charSet:
-                charSet.add(s[c])
-
-
-
-class Solution:
-    def characterReplacement(self, s: str, k: int) -> int:
-        res = 0
-        charSet = set(s)
-
-        for c in charSet:
-            count = l = 0
-            for r in range(len(s)):
-                if s[r] == c:
-                    count += 1
-
-                while (r - l + 1) - count > k:
-                    if s[l] == c:
-                        count -= 1
-                    l += 1
-
-                res = max(res, r - l + 1)
-        return res
+        while r < len(s):
+            count[s[r]] = 1 + count.get(s[r], 0)
+            while ((r - l + 1) - max(count.values())) > k:
+                count[s[l]] -= 1
+                l += 1
+            res = max(res, r - l + 1)
+            r += 1
+        return res 
         
 #########################################################################################
 # Permutation in String
@@ -146,6 +117,13 @@ class Solution:
 
 class Solution:
     def checkInclusion(self, s1: str, s2: str) -> bool:
+        if len(s1) > len(s2): return False
+        s1Count = [0] * 26
+        s2Count = [0] * 26
+
+        for i in range(len(s1)):
+            s1Count[ord(s1[i]) - ord ('a')] += 1
+            s2Count[ord(s2[i]) - ord ('a')] += 1
 
 class Solution:
     def checkInclusion(self, s1: str, s2: str) -> bool:
@@ -266,4 +244,23 @@ class Solution:
     def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
         
 
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        output = []
+        q = deque()  # index
+        l = r = 0
 
+        while r < len(nums):
+            while q and nums[q[-1]] < nums[r]:
+                q.pop()
+            q.append(r)
+
+            if l > q[0]:
+                q.popleft()
+
+            if (r + 1) >= k:
+                output.append(nums[q[0]])
+                l += 1
+            r += 1
+
+        return output
