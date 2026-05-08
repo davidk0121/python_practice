@@ -118,47 +118,41 @@ class Solution:
 class Solution:
     def checkInclusion(self, s1: str, s2: str) -> bool:
         if len(s1) > len(s2): return False
-        s1Count = [0] * 26
-        s2Count = [0] * 26
-
-        for i in range(len(s1)):
-            s1Count[ord(s1[i]) - ord ('a')] += 1
-            s2Count[ord(s2[i]) - ord ('a')] += 1
-
-class Solution:
-    def checkInclusion(self, s1: str, s2: str) -> bool:
-        if len(s1) > len(s2):
-            return False
 
         s1Count, s2Count = [0] * 26, [0] * 26
+
+        # count initials
         for i in range(len(s1)):
             s1Count[ord(s1[i]) - ord('a')] += 1
             s2Count[ord(s2[i]) - ord('a')] += 1
 
-        matches = 0
+        # match count initials
+        matches = 0 
         for i in range(26):
             matches += (1 if s1Count[i] == s2Count[i] else 0)
 
+        # sliding window
         l = 0
         for r in range(len(s1), len(s2)):
-            if matches == 26:
-                return True
+            if matches == 26: return True
 
-            index = ord(s2[r]) - ord('a')
-            s2Count[index] += 1
-            if s1Count[index] == s2Count[index]:
-                matches += 1
-            elif s1Count[index] + 1 == s2Count[index]:
-                matches -= 1
+            rIndex = ord(s2[r]) - ord('a')
+            s2Count[rIndex] += 1 # moving one to the right so take one in to the window
+            if s1Count[rIndex] == s2Count[rIndex]:
+                matches += 1 # plus 1 when the match was added
+            elif s1Count[rIndex] + 1 == s2Count[rIndex]:
+                matches -= 1 # minus 1 when the duplicate was added
 
-            index = ord(s2[l]) - ord('a')
-            s2Count[index] -= 1
-            if s1Count[index] == s2Count[index]:
-                matches += 1
-            elif s1Count[index] - 1 == s2Count[index]:
-                matches -= 1
+            lIndex = ord(s2[l]) - ord('a')
+            s2Count[lIndex] -= 1 # moving one to the right so take one out from window
+            if s1Count[lIndex] == s2Count[lIndex]:
+                matches += 1 # plus 1 when the duplicate is removed
+            elif s1Count[lIndex] - 1 == s2Count[lIndex]:
+                matches -= 1 # minus 1 when the match was removed
             l += 1
         return matches == 26
+# Time: O(n)
+# Space: O(1)
         
 #########################################################################################
 # Minimum Window Substring
@@ -184,6 +178,7 @@ class Solution:
 
 class Solution:
     def minWindow(self, s: str, t: str) -> str:
+        if t == "": return ""
 
 
 class Solution:
@@ -216,7 +211,10 @@ class Solution:
                 l += 1
         l, r = res
         return s[l : r + 1] if resLen != float("infinity") else ""
-        
+# Time: O(n+m)
+# Space: O(m)
+
+
 #########################################################################################
 
 # Sliding Window Maximum
@@ -264,3 +262,5 @@ class Solution:
             r += 1
 
         return output
+# Time: O(n)
+# Space: O(n)
