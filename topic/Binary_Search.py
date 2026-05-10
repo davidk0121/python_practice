@@ -49,38 +49,29 @@ class Solution:
 
 class Solution:
     def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
-        row, col = len(matrix), len(matrix[0])
-
-        top, bot = 0, row - 1
-
-
-class Solution:
-    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
-        ROWS, COLS = len(matrix), len(matrix[0])
-
-        top, bot = 0, ROWS - 1
+        rowLen, colLen = len(matrix), len(matrix[0])
+        top, bot = 0, rowLen - 1
+        mid = 0
         while top <= bot:
-            row = (top + bot) // 2
-            if target > matrix[row][-1]:
-                top = row + 1
-            elif target < matrix[row][0]:
-                bot = row - 1
+            mid = (top + bot) // 2
+            if matrix[mid][-1] < target:
+                top = mid + 1
+            elif matrix[mid][0] > target:
+                bot = mid - 1
             else:
                 break
-
-        if not (top <= bot):
-            return False
-        row = (top + bot) // 2
-        l, r = 0, COLS - 1
+        
+        l, r = 0, colLen - 1
+        m = 0
         while l <= r:
             m = (l + r) // 2
-            if target > matrix[row][m]:
+            if matrix[mid][m] < target:
                 l = m + 1
-            elif target < matrix[row][m]:
+            elif matrix[mid][m] > target:
                 r = m - 1
             else:
                 return True
-        return False
+        return matrix[mid][m] == target
 
 
 #########################################################################################
