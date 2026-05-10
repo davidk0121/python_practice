@@ -121,38 +121,37 @@ class Solution:
 
         s1Count, s2Count = [0] * 26, [0] * 26
 
-        # count initials
+        # count initial 
         for i in range(len(s1)):
             s1Count[ord(s1[i]) - ord('a')] += 1
             s2Count[ord(s2[i]) - ord('a')] += 1
 
-        # match count initials
-        matches = 0 
+        matches = 0
+        # count matching 
         for i in range(26):
             matches += (1 if s1Count[i] == s2Count[i] else 0)
 
-        # sliding window
-        l = 0
+        l = 0 
         for r in range(len(s1), len(s2)):
+            # check if it matches 
             if matches == 26: return True
 
-            rIndex = ord(s2[r]) - ord('a')
-            s2Count[rIndex] += 1 # moving one to the right so take one in to the window
-            if s1Count[rIndex] == s2Count[rIndex]:
-                matches += 1 # plus 1 when the match was added
-            elif s1Count[rIndex] + 1 == s2Count[rIndex]:
-                matches -= 1 # minus 1 when the duplicate was added
+            index = ord(s2[r]) - ord('a')
+            s2Count[index] += 1 
+            if s2Count[index] == s1Count[index]: 
+                matches += 1
+            elif s2Count[index] == s1Count[index] + 1:
+                matches -= 1
 
-            lIndex = ord(s2[l]) - ord('a')
-            s2Count[lIndex] -= 1 # moving one to the right so take one out from window
-            if s1Count[lIndex] == s2Count[lIndex]:
-                matches += 1 # plus 1 when the duplicate is removed
-            elif s1Count[lIndex] - 1 == s2Count[lIndex]:
-                matches -= 1 # minus 1 when the match was removed
+            index = ord(s2[l]) - ord('a')
+            s2Count[index] -= 1 
+            if s2Count[index] == s1Count[index]: 
+                matches += 1
+            elif s2Count[index] == s1Count[index] - 1:
+                matches -= 1
             l += 1
         return matches == 26
-# Time: O(n)
-# Space: O(1)
+
         
 #########################################################################################
 # Minimum Window Substring
@@ -178,7 +177,6 @@ class Solution:
 
 class Solution:
     def minWindow(self, s: str, t: str) -> str:
-        if t == "": return ""
 
 
 class Solution:
@@ -211,10 +209,7 @@ class Solution:
                 l += 1
         l, r = res
         return s[l : r + 1] if resLen != float("infinity") else ""
-# Time: O(n+m)
-# Space: O(m)
-
-
+        
 #########################################################################################
 
 # Sliding Window Maximum
@@ -262,5 +257,3 @@ class Solution:
             r += 1
 
         return output
-# Time: O(n)
-# Space: O(n)
