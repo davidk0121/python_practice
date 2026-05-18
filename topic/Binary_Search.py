@@ -241,18 +241,7 @@ class Solution:
 class TimeMap:
 
     def __init__(self):
-        set = {}
-
-
-    def set(self, key: str, value: str, timestamp: int) -> None:
-        
-
-    def get(self, key: str, timestamp: int) -> str:
-
-# Array 
-class TimeMap:
-    def __init__(self):
-        self.keyStore = {}  # key : list of [val, timestamp]
+        self.keyStore = {} # key : list of [val, timestamp]
 
     def set(self, key: str, value: str, timestamp: int) -> None:
         if key not in self.keyStore:
@@ -260,8 +249,10 @@ class TimeMap:
         self.keyStore[key].append([value, timestamp])
 
     def get(self, key: str, timestamp: int) -> str:
-        res, values = "", self.keyStore.get(key, [])
+        res = ""
+        values = self.keyStore.get(key, []) # store all the key values
         l, r = 0, len(values) - 1
+
         while l <= r:
             m = (l + r) // 2
             if values[m][1] <= timestamp:
