@@ -18,10 +18,6 @@
 
 class Solution:
     def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
-
-
-class Solution:
-    def reverseList(self, head: ListNode) -> ListNode:
         prev, curr = None, head
 
         while curr:
@@ -60,9 +56,6 @@ class Solution:
 
 class Solution:
     def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
-
-class Solution:
-    def mergeTwoLists(self, list1: ListNode, list2: ListNode) -> ListNode:
         dummy = node = ListNode()
 
         while list1 and list2:
@@ -73,9 +66,12 @@ class Solution:
                 node.next = list2
                 list2 = list2.next
             node = node.next
-
-        node.next = list1 or list2
-
+        
+        if list1:
+            node.next = list1
+        elif list2:
+            node.next = list2
+        
         return dummy.next
         
 #########################################################################################
@@ -103,6 +99,19 @@ class Solution:
 
 class Solution:
     def hasCycle(self, head: Optional[ListNode]) -> bool:
+
+
+
+class Solution:
+    def hasCycle(self, head: Optional[ListNode]) -> bool:
+        slow, fast = head, head
+
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+            if slow == fast:
+                return True
+        return False
 
 #########################################################################################
 # Reorder Linked List
