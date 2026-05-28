@@ -136,31 +136,33 @@ class Solution:
 
 class Solution:
     def reorderList(self, head: Optional[ListNode]) -> None:
-    
-
-
-class Solution:
-    def reorderList(self, head: Optional[ListNode]) -> None:
+        # 1) find middle
         slow, fast = head, head.next
         while fast and fast.next:
             slow = slow.next
             fast = fast.next.next
 
-        second = slow.next
-        prev = slow.next = None
+        # 2) reverse second half
+        second = slow.next      # store second half
+        prev = None
+        slow.next = None        # make first half end point None
         while second:
-            tmp = second.next
-            second.next = prev
-            prev = second
-            second = tmp
+            temp = second.next  # next to temp
+            second.next = prev  # make next value eqaul to previous value (put behind prev)
+            prev = second       # assign - 
+            second = temp       # assign - 
 
-        first, second = head, prev
+        # 3) merge two halves
+        first = head
+        second = prev
         while second:
-            tmp1, tmp2 = first.next, second.next
+            temp1 = first.next
+            temp2 = second.next
             first.next = second
-            second.next = tmp1
-            first, second = tmp1, tmp2
-
+            second.next = temp1
+            first = temp1
+            second = temp2
+            
 #########################################################################################
 # Remove Node From End of Linked List
 # Medium
