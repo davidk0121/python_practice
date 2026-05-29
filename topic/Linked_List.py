@@ -190,10 +190,6 @@ class Solution:
 
 class Solution:
     def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
-
-
-class Solution:
-    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
         dummy = ListNode(0, head)
         left = dummy
         right = head
@@ -201,49 +197,31 @@ class Solution:
         while i <= n and right:
             right = right.next
             i += 1
+
+        while right:
+            left = left.next
+            right = right.next
         
-        while right:
-            left = left.next
-            right = right.next
-
         #delete
         left.next = left.next.next
         return dummy.next
-
-class Solution:
-    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
-        dummy = ListNode(0, head)
-        left = dummy
-        right = head
-
-        while n > 0 and right:
-            right = right.next
-            n -= 1
-
-        while right:
-            left = left.next
-            right = right.next
-
-        #delete
-        left.next = left.next.next
-        return dummy.next
-
 
 #########################################################################################
 
 # Copy Linked List with Random Pointer
 # Medium
-# You are given the head of a linked list of length n. Unlike a singly linked list, each node contains an additional pointer random, which may point to any node in the list, or null.
+# You are given the head of a linked list of length n. Unlike a singly linked list, each node contains an additional pointer random, which 
+# may point to any node in the list, or null.
 # Create a deep copy of the list.
 # The deep copy should consist of exactly n new nodes, each including:
-
-# The original value val of the copied node
-# A next pointer to the new node corresponding to the next pointer of the original node
-# A random pointer to the new node corresponding to the random pointer of the original node
+# - The original value val of the copied node
+# - A next pointer to the new node corresponding to the next pointer of the original node
+# - A random pointer to the new node corresponding to the random pointer of the original node
 # Note: None of the pointers in the new list should point to nodes in the original list.
 # Return the head of the copied linked list.
 
-# In the examples, the linked list is represented as a list of n nodes. Each node is represented as a pair of [val, random_index] where random_index is the index of the node (0-indexed) that the random pointer points to, or null if it does not point to any node.
+# In the examples, the linked list is represented as a list of n nodes. Each node is represented as a pair of [val, random_index] where 
+# random_index is the index of the node (0-indexed) that the random pointer points to, or null if it does not point to any node.
 
 # Example 1:
 # Input: head = [[3,null],[7,3],[4,0],[5,1]]
@@ -264,6 +242,27 @@ class Node:
 
 class Solution:
     def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
+
+
+
+class Solution:
+    def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
+        oldToCopy = { None : None }
+
+        cur = head
+        while cur:
+            copy = Node(cur.val)
+            oldToCopy[cur] = copy
+            cur = cur.next
+
+        cur = head
+        while cur:
+            copy = oldToCopy[cur]
+            copy.next = oldToCopy[cur.next]
+            copy.random = oldToCopy[cur.random]
+            cur = cur.next
+
+        return oldToCopy[head]
 
 #########################################################################################
 
@@ -293,6 +292,31 @@ class Solution:
     def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
 
 
+
+class Solution:
+    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        dummy = ListNode()
+        cur = dummy
+
+        carry = 0
+        while l1 or l2 or carry:
+            v1 = l1.val if l1 else 0
+            v2 = l2.val if l2 else 0
+
+            # new digit
+            val = v1 + v2 + carry
+            carry = val // 10
+            val = val % 10
+            cur.next = ListNode(val)
+
+            # update ptrs
+            cur = cur.next
+            l1 = l1.next if l1 else None
+            l2 = l2.next if l2 else None
+
+        return dummy.next
+
+
 #########################################################################################
 
 # Find the Duplicate Number
@@ -312,6 +336,22 @@ class Solution:
 class Solution:
     def findDuplicate(self, nums: List[int]) -> int:
 
+
+class Solution:
+    def findDuplicate(self, nums: List[int]) -> int:
+        slow, fast = 0, 0
+        while True:
+            slow = nums[slow]
+            fast = nums[nums[fast]]
+            if slow == fast:
+                break
+
+        slow2 = 0
+        while True:
+            slow = nums[slow]
+            slow2 = nums[slow2]
+            if slow == slow2:
+                return slow
 
 #########################################################################################
 
