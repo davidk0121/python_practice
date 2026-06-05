@@ -23,36 +23,16 @@
 
 class Solution:
     def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
-        if not root: return None
-        
-
-
-class Solution:
-    def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
         if not root:
             return None
-        queue = deque([root])
-        while queue:
-            node = queue.popleft()
-            node.left, node.right = node.right, node.left
-            if node.left:
-                queue.append(node.left)
-            if node.right:
-                queue.append(node.right)
-        return root
-    
-class Solution:
-    def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
-        if not root:
-            return None
-        stack = [root]
-        while stack:
-            node = stack.pop()
-            node.left, node.right = node.right, node.left
-            if node.left:
-                stack.append(node.left)
-            if node.right:
-                stack.append(node.right)
+
+        temp = root.right
+        root.right = root.left
+        root.left = temp
+
+        self.invertTree(root.left)
+        self.invertTree(root.right)
+
         return root
 
 #########################################################################################
@@ -78,6 +58,10 @@ class Solution:
 
 class Solution:
     def maxDepth(self, root: Optional[TreeNode]) -> int:
+        if not root:
+            return 0
+
+        return 1 + max(self.maxDepth(root.left), self.maxDepth(root.right))
         
 #########################################################################################
 # Diameter of Binary Tree
