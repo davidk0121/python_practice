@@ -240,14 +240,9 @@ class Node:
         self.random = random
 """
 
-class Solution:
+cclass Solution:
     def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
-
-
-
-class Solution:
-    def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
-        oldToCopy = { None : None }
+        oldToCopy = {None : None}
 
         cur = head
         while cur:
@@ -261,7 +256,6 @@ class Solution:
             copy.next = oldToCopy[cur.next]
             copy.random = oldToCopy[cur.random]
             cur = cur.next
-
         return oldToCopy[head]
 
 #########################################################################################
@@ -302,11 +296,18 @@ class Solution:
             rem = sum % 10 
             cur.next = ListNode(rem)
 
+<<<<<<< HEAD
             cur = cur.next
             l1 = l1.next if l1 else None
             l2 = l2.next if l2 else None
 
         return dummy.next
+=======
+            l1 = l1.next if l1 else None
+            l2 = l2.next if l2 else None
+            cur = cur.next
+
+>>>>>>> 48c210ba4611f63a9dbe9a76409b3fa5554224cc
 
 #########################################################################################
 
@@ -326,11 +327,7 @@ class Solution:
 
 class Solution:
     def findDuplicate(self, nums: List[int]) -> int:
-
-
-class Solution:
-    def findDuplicate(self, nums: List[int]) -> int:
-        slow, fast = 0, 0
+        slow, fast = 0, 0 
         while True:
             slow = nums[slow]
             fast = nums[nums[fast]]
@@ -342,7 +339,9 @@ class Solution:
             slow = nums[slow]
             slow2 = nums[slow2]
             if slow == slow2:
-                return slow
+                return slow 
+
+
 
 #########################################################################################
 

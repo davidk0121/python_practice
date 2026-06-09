@@ -23,14 +23,37 @@
 
 class Solution:
     def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
-        def dfs(cur):
-            if not cur: return None
-            temp = cur.left
-            cur.left = dfs(cur.right)
-            cur.right = dfs(temp)
+        if not root: return None
+        
 
-            return cur
-        return dfs(root)
+
+class Solution:
+    def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        if not root:
+            return None
+        queue = deque([root])
+        while queue:
+            node = queue.popleft()
+            node.left, node.right = node.right, node.left
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+        return root
+    
+class Solution:
+    def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        if not root:
+            return None
+        stack = [root]
+        while stack:
+            node = stack.pop()
+            node.left, node.right = node.right, node.left
+            if node.left:
+                stack.append(node.left)
+            if node.right:
+                stack.append(node.right)
+        return root
 
 #########################################################################################
 # Maximum Depth of Binary Tree
@@ -55,10 +78,7 @@ class Solution:
 
 class Solution:
     def maxDepth(self, root: Optional[TreeNode]) -> int:
-        if not root: return 0
-            
-        return 1 + max(self.maxDepth(root.right), self.maxDepth(root.left))
-
+        
 #########################################################################################
 # Diameter of Binary Tree
 # The diameter of a binary tree is defined as the length of the longest path between any two nodes within the tree. The path does not necessarily have to pass through the root.
