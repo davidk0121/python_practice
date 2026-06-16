@@ -324,19 +324,22 @@ class Solution:
 
 class Solution:
     def goodNodes(self, root: TreeNode) -> int:
+        res = 0
 
-class Solution:
-    def goodNodes(self, root: TreeNode) -> int:
-        
-        def valid(node, left, right):
+        def dfs(node, maxVal):
             if not node:
-                return True
-            if not (node.val < right and node.val > left):
-                return False
+                return 0
+            
+            res = 1 if node.val >= maxVal else 0 
+            maxVal = max(maxVal, node.val)
+            res += dfs(node.left, maxVal)
+            res += dfs(node.right, maxVal)
+            return res
 
-            return (valid(node.left, left, node.val) and valid(node.right, node.val, right))
+        return dfs(root, root.val)
+
+
         
-        return valid(root, float("-inf"), float("inf"))
 
 #########################################################################################
 # Valid Binary Search Tree
@@ -363,6 +366,15 @@ class Solution:
 
 class Solution:
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
+        def valid(node, left, right):
+            if not node:
+                return True
+            if not (node.val < right and node.val > left):
+                return False
+
+            return (valid(node.left, left, node.val) and valid(node.right, node.val, right))
+        
+        return valid(root, float("-inf"), float("inf"))
 
 #########################################################################################
 # Kth Smallest Integer in BST
@@ -384,8 +396,12 @@ class Solution:
 class Solution:
     def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
 
+
+
 class Solution:
     def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+
+
 #########################################################################################
 # Construct Binary Tree from Preorder and Inorder Traversal
 # Medium
