@@ -287,9 +287,6 @@ class Solution:
 
 class Solution:
     def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
-
-class Solution:
-    def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
         res = []
         q = collections.deque([root])
 
@@ -337,8 +334,6 @@ class Solution:
             return res
 
         return dfs(root, root.val)
-
-
         
 
 #########################################################################################
@@ -363,17 +358,13 @@ class Solution:
 class Solution:
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
         
-
-class Solution:
-    def isValidBST(self, root: Optional[TreeNode]) -> bool:
         def valid(node, left, right):
-            if not node:
-                return True
-            if not (node.val < right and node.val > left):
+            if not node: return True
+            if not (node.val > left and node.val < right):
                 return False
+            
+            return valid(node.left, left, node.val) and valid(node.right, node.val, right)
 
-            return (valid(node.left, left, node.val) and valid(node.right, node.val, right))
-        
         return valid(root, float("-inf"), float("inf"))
 
 #########################################################################################
@@ -395,12 +386,21 @@ class Solution:
 
 class Solution:
     def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+        n = 0
+        stack = []
+        cur = root
 
-
-
-class Solution:
-    def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
-
+        while cur or stack:
+            # load in the stack
+            while cur:
+                stack.append(cur)
+                cur = cur.left
+            
+            cur = stack.pop()
+            n += 1
+            if n == k:
+                return cur.val
+            cur = cur.right
 
 #########################################################################################
 # Construct Binary Tree from Preorder and Inorder Traversal
@@ -424,6 +424,16 @@ class Solution:
 
 class Solution:
     def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+        if not preorder or not inorder:
+            return None
+        
+        root = TreeNode(preorder[0])
+        mid = inorder.index(preorder[0])
+        root.left = self.buildTree(preorder[1:mid + 1], inorder[:mid])
+        root.right = self.buildTree(preorder[mid + 1:], inorder[mid + 1:])
+        return root
+
+
 #########################################################################################
 
 #########################################################################################
