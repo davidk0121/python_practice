@@ -24,21 +24,14 @@
 
 class KthLargest:
     def __init__(self, k: int, nums: List[int]):
-        
-
-    def add(self, val: int) -> int:
-
-class KthLargest:
-    def __init__(self, k: int, nums: List[int]):
-        # minHeap with K largest integers
         self.minHeap, self.k = nums, k
         heapq.heapify(self.minHeap)
-        while len(self.minHeap) > k:
+        while len(self.minHeap) > self.k:
             heapq.heappop(self.minHeap)
 
     def add(self, val: int) -> int:
         heapq.heappush(self.minHeap, val)
-        if len(self.minHeap) > self.k:
+        while len(self.minHeap) > self.k:
             heapq.heappop(self.minHeap)
         return self.minHeap[0]
 
@@ -70,29 +63,23 @@ class KthLargest:
 
 class Solution:
     def lastStoneWeight(self, stones: List[int]) -> int:
-        
-
-class Solution:
-    def lastStoneWeight(self, stones: List[int]) -> int:
         stones = [-s for s in stones]
         heapq.heapify(stones)
-        
+
         while len(stones) > 1:
             first = heapq.heappop(stones)
             second = heapq.heappop(stones)
             if second > first:
                 heapq.heappush(stones, first - second)
-            
+
         stones.append(0)
         return abs(stones[0])
 
 #########################################################################################
 # K Closest Points to Origin
 # Medium
-# Topics
-# Company Tags
-# Hints
-# You are given an 2-D array points where points[i] = [xi, yi] represents the coordinates of a point on an X-Y axis plane. You are also given an integer k.
+# You are given an 2-D array points where points[i] = [xi, yi] represents the coordinates of a point on an X-Y axis plane. 
+# You are also given an integer k.
 # Return the k closest points to the origin (0, 0).
 # The distance between two points is defined as the Euclidean distance (sqrt((x1 - x2)^2 + (y1 - y2)^2)).
 # You may return the answer in any order.
@@ -100,7 +87,8 @@ class Solution:
 # Example 1:
 # Input: points = [[0,2],[2,2]], k = 1
 # Output: [[0,2]]
-# Explanation : The distance between (0, 2) and the origin (0, 0) is 2. The distance between (2, 2) and the origin is sqrt(2^2 + 2^2) = 2.82842. So the closest point to the origin is (0, 2).
+# Explanation : The distance between (0, 2) and the origin (0, 0) is 2. The distance between (2, 2) and the origin is 
+# sqrt(2^2 + 2^2) = 2.82842. So the closest point to the origin is (0, 2).
 
 # Example 2:
 # Input: points = [[0,2],[2,0],[2,2]], k = 2
@@ -109,24 +97,19 @@ class Solution:
 
 class Solution:
     def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
-        
-
-class Solution:
-    def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
         minHeap = []
-        for x, y in points:
-            dist = (x ** 2) + (y ** 2)
-            minHeap.append([dist, x, y])
 
+        for x, y in points:
+            dist = math.sqrt((x ** 2) + (y ** 2))
+            minHeap.append([dist, x, y])
+        
         heapq.heapify(minHeap)
         res = []
         while k > 0:
             dist, x, y = heapq.heappop(minHeap)
             res.append([x, y])
             k -= 1
-
         return res
-
 
 #########################################################################################
 # Kth Largest Element in an Array
@@ -145,11 +128,33 @@ class Solution:
 
 class Solution:
     def findKthLargest(self, nums: List[int], k: int) -> int:
+        nums = [-c for c in nums]
+        heapq.heapify(nums)
 
+        i = 1
+        res = 0
+        while i <= k:
+            res = heapq.heappop(nums)
+            i += 1
+        return abs(res)
 
 class Solution:
     def findKthLargest(self, nums: List[int], k: int) -> int:
+        k = len(nums) - k
 
+        def quickSelect(l, r):
+            pivot, p = nums[r], l
+            for i in range(l, r):
+                if nums[i] <= pivot:
+                    nums[p], nums[i] = nums[i], nums[p]
+                    p += 1
+            nums[p], nums[r] = nums[r], nums[p]
+
+            if p > k: return quickSelect(L, p - 1)
+            elif p < k: return quickSelect(p + 1, r)
+            else: return nums[p]
+
+        return quickSelect(0, len(nums) - 1)
 
 #########################################################################################
 # Task Scheduler
@@ -175,7 +180,23 @@ class Solution:
 
 class Solution:
     def leastInterval(self, tasks: List[str], n: int) -> int:
+        # each task1 unit time
+        # minimize idle time
+        count = Counter(tasks)
+        maxHeap = [-cnt for cnt in count.values()]
+        heapq.heapify(maxHeap)
 
+        time = 0
+        q = deque() # pairs of [-cnt, idelTime]
+        while maxHeap or q:
+            time += 1
+            if maxHeap:
+                cnt = 1+ heapq.heappop(maxHeap)
+                if cnt:
+                    q.append([cnt, time + n])
+            if q and q[0][1] == time:
+                heapq.heappush(maxHeap, q.popleft()[0])
+        return time
 
 #########################################################################################
 # Design Twitter
