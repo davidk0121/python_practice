@@ -14,7 +14,15 @@
 
 class Solution:
     def subsets(self, nums: List[int]) -> List[List[int]]:
+        res = []
 
+        subset = []
+        def dfs(i):
+            
+
+
+        dfs(0)
+        return res
 
 class Solution:
     def subsets(self, nums: List[int]) -> List[List[int]]:
