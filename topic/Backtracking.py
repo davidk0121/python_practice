@@ -22,27 +22,6 @@ class Solution:
                 res.append(subset.copy())
                 return
             
-            # choose
-            subset.append(nums[i])
-            dfs(i + 1)
-
-            # not choose
-            subset.pop()
-            dfs(i + 1)
-
-        dfs(0)
-        return res
-
-class Solution:
-    def subsets(self, nums: List[int]) -> List[List[int]]:
-        res = []
-
-        subset = []
-        def dfs(i):
-            if i >= len(nums):
-                res.append(subset.copy())
-                return
-            
             # decision to include nums[i]
             subset.append(nums[i])
             dfs(i + 1)
@@ -86,7 +65,9 @@ class Solution:
 
 class Solution:
     def combinationSum(self, nums: List[int], target: int) -> List[List[int]]:
+       res = []
 
+       def dfs
 
 class Solution:
     def combinationSum(self, nums: List[int], target: int) -> List[List[int]]:
@@ -106,6 +87,7 @@ class Solution:
 
         dfs(0, [], 0)
         return res
+    
 #########################################################################################
 # Combination Sum II
 # Medium
@@ -132,6 +114,31 @@ class Solution:
 
 class Solution:
     def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
+
+
+class Solution:
+    def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
+        res = []
+        candidates.sort()
+
+        def dfs(i, cur, total):
+            if total == target:
+                res.append(cur.copy())
+                return 
+            if total > target or i == len(candidates):
+                return 
+            
+            # include candidates[i]
+            cur.append(candidates[i])
+            dfs(i + 1, cur, total + candidates[i])
+            cur.pop()
+            # skip candidates[i]
+            while i + 1 < len(candidates) and candidates[i] == candidates[i + 1]:
+                i += 1
+            dfs(i + 1, cur, total)
+
+        dfs(0, [], 0)
+        return res
         
 #########################################################################################
 # Permutations
@@ -148,6 +155,39 @@ class Solution:
 
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
+
+
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        if len(nums) == 0:
+            return [[]]
+
+        perms = self.permute(nums[i:])
+        res = []
+        for p in perms:
+            for i in rnage(len(p) + 1):
+                p_copy = p.copy()
+                p_copy.insert(i, nums[0])
+                res.append(p_copy)
+        return res
+    
+    # time: n! * n^@
+    # space: n! * n
+
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        perms = []
+
+        for n in nums:
+            new_perms = []
+            for p in perms:
+                for i in range(len(p) + 1):
+                    p_copy = p.copy()
+                    p_copy.insert(i, n)
+                    new_perms.append(p_copy)
+            perms = new_perms
+        return res
+
         
 #########################################################################################
 # Subsets II
@@ -162,6 +202,10 @@ class Solution:
 # Example 2:
 # Input: nums = [7,7]
 # Output: [[],[7], [7,7]]
+
+class Solution:
+    def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
+        
 
 class Solution:
     def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
